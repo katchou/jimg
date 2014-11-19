@@ -1,0 +1,31 @@
+label input[type="file"] {
+    position: fixed;
+    top: -1000px;
+}
+.hidden-button {
+    display: none;
+}
+/*.files {
+    height: 40px;
+    width: 40px;
+}
+#play {
+    background-image: url("assets/images/play.png");
+    height: 40px;
+    width: 40px;
+}
+#previous {
+    background-image: url("assets/images/previous.png");
+    height: 40px;
+    width: 40px;
+}
+#next {
+    background-image: url("assets/images/next.png");
+    height: 40px;
+    width: 40px;
+}
+#time {
+    background-image: url("assets/images/time.png");
+    height: 40px;
+    width: 40px;
+}*/
