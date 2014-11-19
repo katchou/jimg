@@ -2,9 +2,3 @@ label input[type="file"] {
     position: fixed;
     top: -1000px;
 }
-#time_input {
-    display: none;
-}
-input[type="button"][class="hidden-button"] {
-    display: none;
-}

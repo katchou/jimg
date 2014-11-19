@@ -7,6 +7,7 @@
         toggle_play_pause = true,
         img = document.querySelector('#img'),
         files = document.querySelector('#files'),
+        count = document.querySelector('#count'),
         time = document.querySelector('#time'),
         time_input = document.querySelector('#time_input'),
         time_display = document.querySelector('#timer'),
@@ -39,7 +40,7 @@
     function setTimeValue(ev) {
         if (ev.keyCode == 13) {
             if (time_input.value != '' && time_input.validity.valid) {
-                duration = time_input.valueAsNumber/60;
+                duration = time_input.valueAsNumber/60000;
                 time_input.style.display = "none";
                 current_time = duration;
                 showTimer();
@@ -100,6 +101,8 @@
     }
 
     function showImage() {
+        count.style.display = 'inline';
+        count.innerHTML = current_index + 1 + '/' + file_list.length; 
         img.src = window.URL.createObjectURL(file_list.item(current_index));
     }
 
