@@ -1,14 +1,17 @@
 (function() {
     var file_list = null,
+        timer = null,
         current_index = 0,
         duration = 10,
         current_time = 10,
+        toggle_play_pause = true,
         img = document.querySelector('#img'),
         files = document.querySelector('#files'),
         time = document.querySelector('#time'),
         time_input = document.querySelector('#time_input'),
         time_display = document.querySelector('#timer'),
         play = document.querySelector('#play'),
+        pause = document.querySelector('#pause'),
         previous = document.querySelector('#previous'),
         next = document.querySelector('#next');
 
@@ -20,6 +23,7 @@
         previous.addEventListener('click', previousImage);
         next.addEventListener('click', nextImage);
         play.addEventListener('click', runShow);
+        pause.addEventListener('click', pauseShow);
     }
 
     function setFiles(ev) {
@@ -57,27 +61,42 @@
         }
     }
 
+    function togglePlayPause() {
+        toggle_play_pause = !toggle_play_pause;
+        play.style.display = toggle_play_pause ? 'block' : 'none';
+        pause.style.display = toggle_play_pause ? 'none' : 'block';
+    }
+
     function showTimer() {
         time_display.innerHTML = current_time;
         time_display.style.display = 'inline';
     }
 
     function runShow(ev) {
-        if (file_list) {
+        if (file_list && !timer) {
+            togglePlayPause();
             showTimer();
             showImage();
-            var timer = window.setInterval(updateTimer, 1000);
+            timer = window.setInterval(updateTimer, 1000);
+        }
+    }
+
+    function pauseShow(ev) {
+        if (timer) {
+            window.clearInterval(timer);
+            timer = null;
+            togglePlayPause();
         }
     }
 
     function updateTimer() {
+        current_time--;
         if (current_time == 0) {
             current_time = duration;
             nextImage();
             showImage();
         }
         time_display.innerHTML = current_time;
-        current_time--;
     }
 
     function showImage() {
