@@ -2,37 +2,40 @@
 <html>
   <head>
     <title>jimg</title>
+    <link type="text/css" rel="stylesheet" href="assets/fonts/stylesheet.css"></link>
     <link type="text/css" rel="stylesheet" href="jimg.css"></link>
   </head>
-  <body>
-    <div id="files">
-      <span id="count" style="display: none"></span>
-      <label>
-        <img src="assets/image/files.png" alt="files">
-        <input type="file"accept="image/*" multiple>
-      </label>
-    </div>
-    <div id="play">
-      <img src="assets/image/play.png" alt="play">
-    </div>
-    <div id="pause" style="display: none">
-      <img src="assets/image/pause.png" alt="pause">
-    </div>
-    <div id="previous">
-      <img src="assets/image/previous.png" alt="previous">
-    </div>
-    <div id="next">
-      <img src="assets/image/next.png" alt="next">
-    </div>
-    <div id="time">
-      <span id="timer" style="display: none"></span>
-      <form id="time_input" style="display: none">
-        <input type="text" id="time_input_box_min" maxlength="2" placeholder="00" pattern="[0-3]?[0-9]">:<input type="text" id="time_input_box_sec" maxlength="2" placeholder="00" pattern="[0-5]?[0-9]">
-        <input type="submit" value="OK">
-      </form>
-      <img src="assets/image/time.png" alt="time">
-    </div>
+  <body>  
     <div id="content">
+      <div id="files">
+        <span id="count" style="display: none"></span>
+        <label class="round">
+          <input type="file"accept="image/*" multiple>
+        </label>
+      </div>
+      <div id="time" class="round">
+        <span id="timer" style="display: none"></span>
+        <div id="time_bubble">
+          <form id="time_input">
+            <input type="text" id="time_input_box_min" maxlength="2" placeholder="00" pattern="[0-3]?[0-9]" autocomplete="off">
+            :
+            <input type="text" id="time_input_box_sec" maxlength="2" placeholder="00" pattern="[0-5]?[0-9]" autocomplete="off">
+            <input type="submit" value="OK">
+          </form>
+        </div>
+      </div>
+      <div id="play" style="display: none">
+        <img src="assets/image/play.png" alt="play">
+      </div>
+      <div id="pause" style="display: none">
+        <img src="assets/image/pause.png" alt="pause">
+      </div>
+      <div id="previous" style="display: none">
+        <img src="assets/image/previous.png" alt="previous">
+      </div>
+      <div id="next" style="display: none">
+        <img src="assets/image/next.png" alt="next">
+      </div>
       <img id="img" />
     </div>
     <script src="jimg.js"></script>

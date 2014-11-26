@@ -10,6 +10,7 @@
         count = document.querySelector('#count'),
         time = document.querySelector('#time'),
         time_input = document.querySelector('#time_input'),
+        time_bubble = document.querySelector('#time_bubble'),
         time_input_box_min = document.querySelector('#time_input_box_min'),
         time_input_box_sec = document.querySelector('#time_input_box_sec'),
         time_display = document.querySelector('#timer'),
@@ -40,7 +41,7 @@
     }
 
     function setTime(ev) {
-        time_input.style.display = "block";
+        time_bubble.style.display = "block";
         time_input_box_min.placeholder = pad_time(Math.floor(duration / 60));
         time_input_box_sec.placeholder = pad_time(Math.floor(duration % 60));
         time_input_box_min.focus();
@@ -58,7 +59,7 @@
     function setTimeValue(ev) {
         duration = parseInt(time_input_box_min.value) * 60 + parseInt(time_input_box_sec.value);
         ev.preventDefault();
-        time_input.style.display = "none";  
+        time_bubble.style.display = "none";  
         return false;
     }
 
