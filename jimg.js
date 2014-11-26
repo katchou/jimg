@@ -2,7 +2,7 @@
     var file_list = null,
         timer = null,
         current_index = 0,
-        duration = 10,
+        duration = 0,
         current_time = 10,
         toggle_play_pause = true,
         img = document.querySelector('#img'),
@@ -10,6 +10,8 @@
         count = document.querySelector('#count'),
         time = document.querySelector('#time'),
         time_input = document.querySelector('#time_input'),
+        time_input_box_min = document.querySelector('#time_input_box_min'),
+        time_input_box_sec = document.querySelector('#time_input_box_sec'),
         time_display = document.querySelector('#timer'),
         play = document.querySelector('#play'),
         pause = document.querySelector('#pause'),
@@ -19,8 +21,13 @@
     function init() {
         files.addEventListener('change', setFiles);
         time.addEventListener('click', setTime);
-        time_input.addEventListener('keypress', setTimeValue);
-        time_input.addEventListener('blur', function(ev) {ev.target.focus();});
+        time_input.addEventListener('submit', setTimeValue);
+        time_input_box_min.addEventListener('keydown', setTimeValueSanitize);
+        time_input_box_sec.addEventListener('keydown', setTimeValueSanitize);
+        time_input_box_min.addEventListener('keyup', setTimeValueSanitize);
+        time_input_box_sec.addEventListener('keyup', setTimeValueSanitize);
+        time_input_box_min.addEventListener('keyup', setTimeValueHelperNavigateMin);
+        time_input_box_sec.addEventListener('keydown', setTimeValueHelperNavigateSec);
         previous.addEventListener('click', previousImage);
         next.addEventListener('click', nextImage);
         play.addEventListener('click', runShow);
@@ -34,18 +41,42 @@
 
     function setTime(ev) {
         time_input.style.display = "block";
-        time_input.focus();
+        time_input_box_min.placeholder = pad_time(Math.floor(duration / 60));
+        time_input_box_sec.placeholder = pad_time(Math.floor(duration % 60));
+        time_input_box_min.focus();
+        time_input_box_min.select();
+    }
+
+    function pad_time(str) {
+        str += "";
+        if (str.length == 1) {
+            str = "0" + str; 
+        }
+        return str;
     }
 
     function setTimeValue(ev) {
-        if (ev.keyCode == 13) {
-            if (time_input.value != '' && time_input.validity.valid) {
-                duration = time_input.valueAsNumber/60000;
-                time_input.style.display = "none";
-                current_time = duration;
-                showTimer();
-            }
+        duration = parseInt(time_input_box_min.value) * 60 + parseInt(time_input_box_sec.value);
+        ev.preventDefault();
+        time_input.style.display = "none";  
+        return false;
+    }
+
+    function setTimeValueSanitize(ev) {
+        ev.target.value = ev.target.value.replace(/[^0-9]/, '');
+        return /[0-9]/.test(String.fromCharCode(ev.keyCode));
+    }
+
+    function setTimeValueHelperNavigateMin(ev) {
+        if (ev.target.value.length == 2) {
+            time_input_box_sec.focus();
         }
+    }
+
+    function setTimeValueHelperNavigateSec(ev) {
+        if (ev.target.value.length == 0 && ev.keyCode == 8) {
+            time_input_box_min.focus();
+        } 
     }
 
     function previousImage(ev) {
