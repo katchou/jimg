@@ -6,16 +6,17 @@
     <link type="text/css" rel="stylesheet" href="jimg.css"></link>
   </head>
   <body>  
-    <div id="content">
+    <div id="previous" style="display: none"></div>
+    <div id="next" style="display: none"></div>
+    <div id="play" style="display: none"></div>
+    <div id="menu">
       <div id="files">
-        <span id="count" style="display: none"></span>
         <label class="round">
           <input type="file"accept="image/*" multiple>
         </label>
       </div>
       <div id="time" class="round">
-        <span id="timer" style="display: none"></span>
-        <div id="time_bubble">
+        <div id="time_bubble" style="display: none">
           <form id="time_input">
             <input type="text" id="time_input_box_min" maxlength="2" placeholder="00" pattern="[0-3]?[0-9]" autocomplete="off">
             :
@@ -24,19 +25,6 @@
           </form>
         </div>
       </div>
-      <div id="play" style="display: none">
-        <img src="assets/image/play.png" alt="play">
-      </div>
-      <div id="pause" style="display: none">
-        <img src="assets/image/pause.png" alt="pause">
-      </div>
-      <div id="previous" style="display: none">
-        <img src="assets/image/previous.png" alt="previous">
-      </div>
-      <div id="next" style="display: none">
-        <img src="assets/image/next.png" alt="next">
-      </div>
-      <img id="img" />
     </div>
     <script src="jimg.js"></script>
   </body>

@@ -5,7 +5,8 @@
         duration = 0,
         current_time = 10,
         toggle_play_pause = true,
-        img = document.querySelector('#img'),
+        menu = document.querySelector('#menu'),
+        nav = document.querySelector('#nav'),
         files = document.querySelector('#files'),
         count = document.querySelector('#count'),
         time = document.querySelector('#time'),
@@ -20,7 +21,8 @@
         next = document.querySelector('#next');
 
     function init() {
-        files.addEventListener('change', setFiles);
+        // files.addEventListener('change', setFiles);
+        files.addEventListener('click', setFiles);
         time.addEventListener('click', setTime);
         time_input.addEventListener('submit', setTimeValue);
         time_input_box_min.addEventListener('keydown', setTimeValueSanitize);
@@ -32,16 +34,35 @@
         previous.addEventListener('click', previousImage);
         next.addEventListener('click', nextImage);
         play.addEventListener('click', runShow);
-        pause.addEventListener('click', pauseShow);
     }
 
     function setFiles(ev) {
-        file_list = ev.target.files;
+        playMode();
+        // file_list = ev.target.files;
         ev.preventDefault();
+    }
+
+    function playMode() {
+        // nav.style.display = "block";
+        // play.style.display = "block";
+        menu.setAttribute('play', '1');
+        previous.style.display = "block";
+        next.style.display = "block";
     }
 
     function setTime(ev) {
         time_bubble.style.display = "block";
+        time_input_box_min.addEventListener('blur', function() {
+            if (isNaN(time_input_box_min.value)) {
+                time_input_box_min.focus();
+                return;
+            }
+            if (isNaN(time_input_box_sec.value)) {
+                time_input_box_sec.focus();
+                return;
+            }
+        });
+        time.setAttribute('active', '1');
         time_input_box_min.placeholder = pad_time(Math.floor(duration / 60));
         time_input_box_sec.placeholder = pad_time(Math.floor(duration % 60));
         time_input_box_min.focus();
@@ -57,9 +78,15 @@
     }
 
     function setTimeValue(ev) {
-        duration = parseInt(time_input_box_min.value) * 60 + parseInt(time_input_box_sec.value);
         ev.preventDefault();
-        time_bubble.style.display = "none";  
+        duration = parseInt(time_input_box_min.value) * 60 + parseInt(time_input_box_sec.value);
+        if (!isNaN(duration)){
+            time_input.reset();
+            time_bubble.style.display = "none";
+            time.removeAttribute('active');
+        } else {
+            duration = 0;
+        }
         return false;
     }
 

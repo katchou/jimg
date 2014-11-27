@@ -1,55 +1,86 @@
-body {
-    font-family: 'novecento_wide_bookbold';
-    background-image: url(assets/images/broken_noise.png);
+html, body {
+  height: 100%;
+  margin: 0px;
+  font-family: 'novecento_wide_bookbold';
+  background-image: url(assets/images/broken_noise.png);
 }
-#content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+#menu {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#menu[play] {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 .round {
-    margin: 25px;
-    display: inline-block;
-    height: 112px;
-    width: 112px;
+  margin: 25px;
+  display: inline-block;
+  height: 112px;
+  width: 112px;
+}
+#previous {
+  margin: auto;
+  position: absolute;
+  top: 0; left: 5px; bottom: 0; right: auto;
+  height: 60px;
+  width: 28px;
+  background-image: url(assets/images/btn_prev_arrow.png);
+}
+#play {
+}
+#next {
+  margin: auto;
+  position: absolute;
+  top: 0; left: auto; bottom: 0; right: 5px;
+  height: 60px;
+  width: 28px;
+  background-image: url(assets/images/btn_next_arrow.png);
+}
+#files {
 }
 #files label {
-    background-image: url(assets/images/btn_loadfiles_inactive.png);
+  background-image: url(assets/images/btn_loadfiles_inactive.png);
 }
 #files label:hover {
-    background-image: url(assets/images/btn_loadfiles_active.png);
+  background-image: url(assets/images/btn_loadfiles_active.png);
 }
 #time {
-    background-image: url(assets/images/btn_settime_inactive.png);
+  background-image: url(assets/images/btn_settime_inactive.png);
 }
 #time:hover {
-    background-image: url(assets/images/btn_settime_active.png);    
+  background-image: url(assets/images/btn_settime_active.png);
+}
+#time[active] {
+  background-image: url(assets/images/btn_settime_active.png);
 }
 #time_bubble {
-    position: relative;
-    top: -80px;
-    left: -8px;
-    height: 76px;
-    width: 128px;
-    background-image: url(assets/images/timer_bubble_blank.png);   
+  position: relative;
+  top: -80px;
+  left: -8px;
+  height: 76px;
+  width: 128px;
+  background-image: url(assets/images/timer_bubble_blank.png);   
 }
 #time_bubble form {
-    font-family: 'novecento_widelight';
-    font-size: 1.2em;
-    height: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  font-family: 'novecento_widelight';
+  font-size: 1.2em;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 #time_bubble input {
-    outline: none;
-    font-size: 1.2em;
-    width: 1.2em;
-    height: 1.2em;
-    border-style: none;
+  outline: none;
+  font-size: 1.2em;
+  width: 1.2em;
+  height: 1.2em;
+  border-style: none;
 }
 input[type="file"] {
-    position: fixed;
-    top: -1000px;
+  position: fixed;
+  top: -1000px;
 }
