@@ -1,8 +1,12 @@
-html, body {
+html, body  {
   height: 100%;
   margin: 0px;
   font-family: 'novecento_wide_bookbold';
   background-image: url(assets/images/broken_noise.png);
+}
+#canvas {
+  height: 100%;
+  width: 100%;
 }
 #menu {
   height: 100%;
@@ -17,8 +21,12 @@ html, body {
   align-items: flex-end;
 }
 .round {
+  display: table-cell;
+  font-size: 22px;
+  color: #FFF;
+  text-align: center;
+  vertical-align: middle;
   margin: 25px;
-  display: inline-block;
   height: 112px;
   width: 112px;
 }
@@ -31,6 +39,13 @@ html, body {
   background-image: url(assets/images/btn_prev_arrow.png);
 }
 #play {
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  height: 466px;
+  width: 466px;
+  background-image: url(assets/images/btn_off_play.png), url(assets/images/broken_noise.png);
+  background-blend-mode: overlay;
 }
 #next {
   margin: auto;
@@ -41,33 +56,41 @@ html, body {
   background-image: url(assets/images/btn_next_arrow.png);
 }
 #files {
+  padding:15px;
 }
 #files label {
-  background-image: url(assets/images/btn_loadfiles_inactive.png);
+  background-position: center;
+  background-image: url(assets/images/btn_inactive.png), url(assets/images/broken_noise.png);
+  background-blend-mode: overlay;
 }
 #files label:hover {
-  background-image: url(assets/images/btn_loadfiles_active.png);
+  background-image: url(assets/images/btn_active.png);
 }
 #time {
-  background-image: url(assets/images/btn_settime_inactive.png);
+  padding:15px;
 }
-#time:hover {
-  background-image: url(assets/images/btn_settime_active.png);
+#time label {
+  background-image: url(assets/images/btn_inactive.png), url(assets/images/broken_noise.png);
+  background-blend-mode: overlay;
 }
-#time[active] {
-  background-image: url(assets/images/btn_settime_active.png);
+#time label:hover {
+  background-image: url(assets/images/btn_active.png);
+}
+#time[active] label{
+  background-image: url(assets/images/btn_active.png);
 }
 #time_bubble {
   position: relative;
-  top: -80px;
+  top: -190px;
   left: -8px;
   height: 76px;
   width: 128px;
   background-image: url(assets/images/timer_bubble_blank.png);   
 }
 #time_bubble form {
-  font-family: 'novecento_widelight';
+  /*font-family: 'novecento_widelight';--*/
   font-size: 1.2em;
+  color: #000;
   height: 70px;
   display: flex;
   justify-content: center;
@@ -83,4 +106,10 @@ html, body {
 input[type="file"] {
   position: fixed;
   top: -1000px;
+}
+#img {
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  /*box-shadow: inset 0px 0px 150px 150px #000;*/
 }

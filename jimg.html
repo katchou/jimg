@@ -11,12 +11,13 @@
     <div id="play" style="display: none"></div>
     <div id="menu">
       <div id="files">
-        <label class="round">
-          <input type="file"accept="image/*" multiple>
-        </label>
+        <label class="round" for="files_input" id="files_label">LOAD<br>FILES</label>
+        <input type="file" id="files_input" accept="image/*" multiple>
       </div>
       <div id="time" class="round">
-        <div id="time_bubble" style="display: none">
+        <label class="round" for="time_input_fake">SET<br>TIME</label>
+        <input type="text" id="time_input_fake" style="display:none"/>
+        <div id="time_bubble"  style="display:none">
           <form id="time_input">
             <input type="text" id="time_input_box_min" maxlength="2" placeholder="00" pattern="[0-3]?[0-9]" autocomplete="off">
             :
@@ -26,6 +27,7 @@
         </div>
       </div>
     </div>
+    <img id="img"></img>
     <script src="jimg.js"></script>
   </body>
 </html>

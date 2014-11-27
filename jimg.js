@@ -1,28 +1,27 @@
 (function() {
     var file_list = null,
         timer = null,
-        current_index = 0,
+        current_index = - 1,
         duration = 0,
         current_time = 10,
-        toggle_play_pause = true,
         menu = document.querySelector('#menu'),
+        img = document.querySelector('#img'),
         nav = document.querySelector('#nav'),
         files = document.querySelector('#files'),
+        files_label = document.querySelector('#files_label'),
         count = document.querySelector('#count'),
         time = document.querySelector('#time'),
         time_input = document.querySelector('#time_input'),
         time_bubble = document.querySelector('#time_bubble'),
         time_input_box_min = document.querySelector('#time_input_box_min'),
         time_input_box_sec = document.querySelector('#time_input_box_sec'),
-        time_display = document.querySelector('#timer'),
         play = document.querySelector('#play'),
         pause = document.querySelector('#pause'),
         previous = document.querySelector('#previous'),
         next = document.querySelector('#next');
 
     function init() {
-        // files.addEventListener('change', setFiles);
-        files.addEventListener('click', setFiles);
+        files.addEventListener('change', setFiles);
         time.addEventListener('click', setTime);
         time_input.addEventListener('submit', setTimeValue);
         time_input_box_min.addEventListener('keydown', setTimeValueSanitize);
@@ -34,17 +33,18 @@
         previous.addEventListener('click', previousImage);
         next.addEventListener('click', nextImage);
         play.addEventListener('click', runShow);
+        img.addEventListener('load', resizeImage);
     }
 
     function setFiles(ev) {
+        file_list = ev.target.files;
+        files_label.innerHTML = current_index + 1 + "/" + file_list.length;
         playMode();
-        // file_list = ev.target.files;
         ev.preventDefault();
     }
 
     function playMode() {
-        // nav.style.display = "block";
-        // play.style.display = "block";
+        play.style.display = "block";
         menu.setAttribute('play', '1');
         previous.style.display = "block";
         next.style.display = "block";
@@ -84,6 +84,7 @@
             time_input.reset();
             time_bubble.style.display = "none";
             time.removeAttribute('active');
+            showTimer();
         } else {
             duration = 0;
         }
@@ -121,20 +122,55 @@
         }
     }
 
-    function togglePlayPause() {
-        toggle_play_pause = !toggle_play_pause;
-        play.style.display = toggle_play_pause ? 'block' : 'none';
-        pause.style.display = toggle_play_pause ? 'none' : 'block';
+    function showTimer() {
+        canvas = document.createElement('canvas');
+        canvas.height = 112;
+        canvas.width = 112;
+        time.appendChild(canvas);
+        context = canvas.getContext('2d');
+        centerX = canvas.width / 2;
+        centerY = canvas.height / 2;
+        radius = 51;
+        draw();
+    // animate();
     }
 
-    function showTimer() {
-        time_display.innerHTML = current_time;
-        time_display.style.display = 'inline';
+    // function animate() {
+    //   setTimeout(function() {
+    //     window.requestAnimationFrame(animate);
+    //     duration++;
+    //     draw();
+    //   }, 1000);
+    // }
+
+    function draw() { 
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.beginPath();
+      context.arc(centerX, centerY, radius, Math.PI * 1.5, Math.PI * (duration / 50 - 0.5), false);
+      context.lineWidth = 8;
+      context.strokeStyle = '#000';
+      context.stroke();
+
+      context.beginPath();
+      context.arc(centerX, centerY, radius, Math.PI * 1.5, Math.PI * (duration / 50 - 0.5), true);
+      context.lineWidth = 8;
+      context.strokeStyle = 'rgb(241,101,76)';
+      context.stroke();
+
+      context.font = 'normal 40pt novecento_wide_bookbold';
+      context.textAlign = 'center';
+      var width = context.measureText(duration).width;
+      context.fillText(duration, centerX, centerY);
+
+      context.font = '20pt Calibri';
+      context.fillText('%', centerX , centerY + 30);
     }
 
     function runShow(ev) {
+        if (current_index < 0) {
+            current_index = 0;
+        }
         if (file_list && !timer) {
-            togglePlayPause();
             showTimer();
             showImage();
             timer = window.setInterval(updateTimer, 1000);
@@ -156,13 +192,18 @@
             nextImage();
             showImage();
         }
-        time_display.innerHTML = current_time;
+        // time_display.innerHTML = current_time;
     }
 
     function showImage() {
-        count.style.display = 'inline';
-        count.innerHTML = current_index + 1 + '/' + file_list.length; 
         img.src = window.URL.createObjectURL(file_list.item(current_index));
+    }
+
+    function resizeImage(ev) {
+        img.style.height = ev.target.naturalHeight + "px";
+        img.style.width = ev.target.naturalWidth + "px";
+        // img.style.boxShadow = "inset 0px 0px 150px 150px #000";
+        files_label.innerHTML = current_index + 1 + '/' + file_list.length; 
     }
 
     init();
