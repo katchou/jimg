@@ -1,20 +1,27 @@
-html, body  {
+html {
+  height: 100%;
+} 
+
+body  {
   height: 100%;
   margin: 0px;
   font-family: 'novecento_wide_bookbold';
   background-image: url(assets/images/broken_noise.png);
+  /*box-shadow: inset 0px 0px 30px 30px rgba(0, 0, 0, 0.2);*/
 }
 #canvas {
   height: 100%;
   width: 100%;
 }
 #menu {
+  /*z-index: 2;*/
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 #menu[play] {
+  /*z-index: -1;*/
   height: 100%;
   display: flex;
   justify-content: space-between;
@@ -26,9 +33,15 @@ html, body  {
   color: #FFF;
   text-align: center;
   vertical-align: middle;
-  margin: 25px;
+}
+.menu {
   height: 112px;
-  width: 112px;
+  width: 112px;  
+  margin: 25px;
+}
+.nav {
+  height: 466px;
+  width: 466px; 
 }
 #previous {
   margin: auto;
@@ -37,15 +50,6 @@ html, body  {
   height: 60px;
   width: 28px;
   background-image: url(assets/images/btn_prev_arrow.png);
-}
-#play {
-  margin: auto;
-  position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
-  height: 466px;
-  width: 466px;
-  background-image: url(assets/images/btn_off_play.png), url(assets/images/broken_noise.png);
-  background-blend-mode: overlay;
 }
 #next {
   margin: auto;
@@ -68,6 +72,8 @@ html, body  {
 }
 #time {
   padding:15px;
+  height: 112px;
+  width: 112px;
 }
 #time label {
   background-image: url(assets/images/btn_inactive.png), url(assets/images/broken_noise.png);
@@ -88,8 +94,7 @@ html, body  {
   background-image: url(assets/images/timer_bubble_blank.png);   
 }
 #time_bubble form {
-  /*font-family: 'novecento_widelight';--*/
-  font-size: 1.2em;
+  font-size: 22px;
   color: #000;
   height: 70px;
   display: flex;
@@ -98,18 +103,82 @@ html, body  {
 }
 #time_bubble input {
   outline: none;
-  font-size: 1.2em;
+  font-size: 22px;
   width: 1.2em;
   height: 1.2em;
   border-style: none;
 }
 input[type="file"] {
+  /*we load it here since we need to load it otherwise the canvas can't use it the first time*/
+  font-family: 'novecento_widelight';
   position: fixed;
   top: -1000px;
 }
-#img {
+#imageView label {
+  display: none;
+
+
+
+
+  /*position: fixed;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  margin-left: 142px; 
+  margin-right: 142px;
+  margin-top: 15px;
+  margin-bottom: 15px;*/
+/*  vertical-align: middle;
+  background-repeat:no-repeat;
+  background-position: center center;*/
+}
+
+#imageView:hover label {
+  display: block;
+}
+#image {
   margin: auto;
   position: absolute;
   top: 0; left: 0; bottom: 0; right: 0;
-  /*box-shadow: inset 0px 0px 150px 150px #000;*/
+}
+#play {
+  position: fixed;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  margin-left: 142px; 
+  margin-right: 142px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /*margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  height: 466px;
+  width: 466px;*/
+  background-image: url(assets/images/btn_off_play.png), url(assets/images/broken_noise.png);
+  background-blend-mode: overlay;
+  background-repeat:no-repeat;
+  background-position: center center;
+}
+#play label {
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+#play[play] {
+  background-image: none;
+}
+#play[play] label {
+  background-image: url(assets/images/btn_stop.png);
+}
+#play[pause] label {
+  background-image: url(assets/images/btn_inactive_play.png);
+}
+#play[pause] label:hover {
+  background-image: url(assets/images/btn_active_play.png);
 }
