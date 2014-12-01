@@ -41,6 +41,8 @@
         previous.addEventListener('click', previousImage);
         next.addEventListener('click', nextImage);
         play.addEventListener('click', runShow);
+    
+        playMode();
     }
 
     function setFiles(ev) {
@@ -51,13 +53,13 @@
     }
 
     function playMode() {
-        if (file_list && duration) {
+        // if (file_list && duration) {
             imageView.style.display = "block";
             menu.setAttribute('play', '1');
             previous.style.display = "block";
             next.style.display = "block";
             play.style.display = "flex";
-        }
+        // }
     }
 
     function showTimeBubble(ev) {

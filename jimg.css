@@ -7,7 +7,7 @@ body  {
   margin: 0px;
   font-family: 'novecento_wide_bookbold';
   background-image: url(assets/images/broken_noise.png);
-  /*box-shadow: inset 0px 0px 30px 30px rgba(0, 0, 0, 0.2);*/
+  box-shadow: inset 0px 0px 30px 30px rgba(0, 0, 0, 0.3);
 }
 #canvas {
   height: 100%;
@@ -66,6 +66,7 @@ body  {
   padding:15px;
 }
 #files label {
+  opacity: 0.1;
   background-position: center;
   background-image: url(assets/images/btn_inactive.png), url(assets/images/broken_noise.png);
   background-blend-mode: overlay;
@@ -163,7 +164,8 @@ input[type="file"] {
   top: 0; left: 0; bottom: 0; right: 0;
   height: 466px;
   width: 466px;*/
-  background-image: url(assets/images/btn_off_play.png), url(assets/images/broken_noise.png);
+  /*background-image: url(assets/images/btn_off_play.png), url(assets/images/broken_noise.png);*/
+  background-image: url('assets/Koala.jpg'), url(assets/images/btn_stop.png);
   background-blend-mode: overlay;
   background-repeat:no-repeat;
   background-position: center center;
