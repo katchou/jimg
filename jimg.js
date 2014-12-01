@@ -2,7 +2,7 @@
     var file_list = null,
         intid = null,
         current_index = - 1,
-        duration = 3,
+        duration = 0,
         current_time = 0,
 
         menu = document.querySelector('#menu'),
@@ -14,6 +14,7 @@
 
         time = document.querySelector('#time'),
         time_form = document.querySelector('#time_form'),
+        set_time_label = document.querySelector('#set_time_label'),
         time_input_label = document.querySelector('#time_input_label'),
         time_input_box_min = document.querySelector('#time_input_box_min'),
         time_input_box_sec = document.querySelector('#time_input_box_sec'),
@@ -28,7 +29,7 @@
 
     function init() {
         files_input.addEventListener('change', setFiles);
-        time_input.addEventListener('click', showTimeBubble);
+        set_time_label.addEventListener('click', showTimeBubble);
         timer.addEventListener('click', showTimeBubble);
         time_form.addEventListener('submit', setTimeValue);
         time_input_box_min.addEventListener('keydown', setTimeValueSanitize);
@@ -37,8 +38,6 @@
         time_input_box_sec.addEventListener('keyup', setTimeValueSanitize);
         time_input_box_min.addEventListener('keyup', setTimeValueHelperNavigateMin);
         time_input_box_sec.addEventListener('keydown', setTimeValueHelperNavigateSec);
-        // image.addEventListener('mouseenter', showPause);
-        // image.addEventListener('mouseleave', hidePause);
         previous.addEventListener('click', previousImage);
         next.addEventListener('click', nextImage);
         play.addEventListener('click', runShow);
@@ -62,8 +61,7 @@
     }
 
     function showTimeBubble(ev) {
-        time_input_label.innerHTML = 'OK';
-        time_input_label.style.fontSize = "46px";
+        set_time_label.style.display = "none";
         time_input_label.style.display = "table-cell";
         timer.style.display = "none";
         time_bubble.style.display = "block";
@@ -84,13 +82,15 @@
 
     function setTimeValue(ev) {
         ev.preventDefault();
-        if (time_input_box_min.value || time_input_box_sec.value) {
+        if (time_input_box_min.value || time_input_box_sec.value || duration) {
             time_input_box_min.value = time_input_box_min.value ? time_input_box_min.value : "0";
             time_input_box_sec.value = time_input_box_sec.value ? time_input_box_sec.value : "0";
-            duration = parseInt(time_input_box_min.value) * 60 + parseInt(time_input_box_sec.value);
+            var new_duration = parseInt(time_input_box_min.value) * 60 + parseInt(time_input_box_sec.value);
             time_form.reset();
             time_bubble.style.display = "none";
+            time_input_label.style.display = "none";
             time.removeAttribute('active');
+            duration = new_duration ? new_duration : duration;
             current_time = duration;
             showTimer();
         } else {
@@ -169,7 +169,6 @@
             context.fillText(min_str + ":" + sec_str, centerX, centerY + 10);
 
         } else {
-            // duration = 100;
             context.beginPath();
             context.arc(centerX, centerY, radius, Math.PI * 1.5, Math.PI * (2 * completion - 0.5), false);
             context.lineWidth = 10;
@@ -202,8 +201,6 @@
             current_index = 0;
         }
         if (file_list && !intid) {
-            // play.style.display = "none";
-            // play.removeAttribute('pause');
             play.setAttribute('play', '1');
             showTimer();
             showImage();
@@ -234,11 +231,6 @@
         current_time = duration;
     }
 
-    function stopShow() {
-
-    }
-
-
     function updateTimer() {
         // current_time--;
         if (--current_time <= 0) {
@@ -246,8 +238,14 @@
             if (current_index + 1 == file_list.length) {
                 play.removeAttribute('play');
                 resetTimer();
+                showTimer();
+                current_index = - 1;
                 // showTimer();            
                 imageView.style.backgroundImage = "none";
+                files_label.innerHTML = 'LOAD<br>FILES';
+                set_time_label.style.display = "table-cell";
+                time_form.reset();
+                timer.style.display = "none";
                 return;
             }
             nextImage();
@@ -258,31 +256,7 @@
         if (current_time < 5) {
             document.querySelector('#bip').play();
         }
-        // time_display.innerHTML = current_time;
     }
-
-    // function showImage() {
-    //     image.onload = function () {
-    //         if (image.naturalHeight > image.naturalWidth) {
-    //             var computedHeight = Math.min(parseInt(window.getComputedStyle(imageView).height), image.naturalHeight);
-    //             var ratio = computedHeight / image.naturalHeight;
-    //             image.style.height = computedHeight + "px";
-    //             image.style.width = image.naturalWidth * ratio + "px";
-    //             play.style.height = computedHeight + "px";
-    //             play.style.width = image.naturalWidth * ratio + "px";
-    //         } else {
-    //             var computedwidth = Math.min(parseInt(window.getComputedStyle(imageView).width), image.naturalWidth);
-    //             var ratio = computedwidth / image.naturalWidth;
-    //             image.style.width = computedwidth + "px";
-    //             image.style.height = image.naturalHeight * ratio + "px";
-    //             var ratio = computedwidth / image.naturalWidth;
-    //             play.style.width = computedwidth + "px";
-    //             play.style.height = image.naturalHeight * ratio + "px";
-    //         }
-    //     }
-    //     image.src = window.URL.createObjectURL(file_list.item(current_index));
-    // }
-
 
     function showImage() {
         var image = new Image();
@@ -292,39 +266,16 @@
                 var ratio = computedHeight / image.naturalHeight;
                 imageView.style.height = computedHeight + "px";
                 imageView.style.width = image.naturalWidth * ratio + "px";
-                // play.style.height = computedHeight + "px";
-                // play.style.width = image.naturalWidth * ratio + "px";
             } else {
                 var computedwidth = Math.min(parseInt(window.getComputedStyle(play).width), image.naturalWidth);
                 var ratio = computedwidth / image.naturalWidth;
                 imageView.style.width = computedwidth + "px";
                 imageView.style.height = image.naturalHeight * ratio + "px";
                 var ratio = computedwidth / image.naturalWidth;
-                // play.style.width = computedwidth + "px";
-                // play.style.height = image.naturalHeight * ratio + "px";
             }
             imageView.style.backgroundImage = 'url(' + this.src + ')';
         }
         image.src = window.URL.createObjectURL(file_list.item(current_index));
-    }
-    function showPause() {
-        // imageView.style.zIndex = 2;
-        // play_label.style.backgroundImage = 'url(assets/images/btn_stop.png)';
-        play.style.backgroundColor = 'rgba(0,0,0,0.4)';
-        play.style.display = "flex";
-        // play.style.opacity = '0.9';
-        // play.style.backgroundImage = 'url(assets/images/btn_stop.png)';
-        // play.style.display = "block";
-    }
-
-    function hidePause() {
-        // imageView.style.zIndex = 2;
-        // play_label.style.backgroundImage = 'url(assets/images/btn_stop.png)';
-        // play.style.backgroundColor = 'rgba(0,0,0,0.4)';
-        play.style.display = "none";
-        // play.style.opacity = '0.9';
-        // play.style.backgroundImage = 'url(assets/images/btn_stop.png)';
-        // play.style.display = "block";
     }
 
     init();

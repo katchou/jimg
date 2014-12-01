@@ -39,6 +39,9 @@ body  {
   width: 112px;  
   margin: 25px;
 }
+#time_input_label {
+  font-size: 46px;  
+}
 .nav {
   height: 466px;
   width: 466px; 
